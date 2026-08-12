@@ -114,7 +114,7 @@ export default function TeamPage() {
           <h2 className="font-jakarta font-bold text-2xl mb-2">Your University Name</h2>
           <p className="text-blue-200 text-sm mb-1">Department of Civil Engineering</p>
           <p className="text-blue-200 text-sm mb-1">Faculty of Engineering & Technology</p>
-          <p className="text-gray-400 text-xs mt-3">FYP-CE-2025 · Session 2021–2025</p>
+          <p className="text-gray-400 text-xs mt-3">FYP-CE-2026 · Session 2022–2026</p>
         </div>
       </div>
     </div>
