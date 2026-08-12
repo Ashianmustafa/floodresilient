@@ -4,6 +4,9 @@ import StatsBar from "@/components/home/StatsBar";
 import WhatIsResearch from "@/components/home/WhatIsResearch";
 import ResearchPillars from "@/components/home/ResearchPillars";
 import ExperimentGroups from "@/components/home/ExperimentGroups";
+import InteractiveDataCharts from "@/components/home/InteractiveDataCharts";
+import GroupComparisonTable from "@/components/home/GroupComparisonTable";
+import TreatmentSimulator from "@/components/home/TreatmentSimulator";
 import KPISection from "@/components/home/KPISection";
 import TimelineSection from "@/components/home/TimelineSection";
 import ReferenceHighlight from "@/components/home/ReferenceHighlight";
@@ -22,6 +25,9 @@ export default function HomePage() {
       <WhatIsResearch />
       <ResearchPillars />
       <ExperimentGroups />
+      <InteractiveDataCharts />
+      <TreatmentSimulator />
+      <GroupComparisonTable />
       <KPISection />
       <TimelineSection />
       <ReferenceHighlight />
