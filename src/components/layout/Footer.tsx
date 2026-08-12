@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Layers, Github, ExternalLink, Mail } from "lucide-react";
+import { Layers, ExternalLink, Mail } from "lucide-react";
 
 const footerLinks = {
   research: [
