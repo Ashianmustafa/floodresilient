@@ -159,7 +159,7 @@ export default function Footer() {
       <div className="border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-gray-500 text-xs">
-            © 2026 GeoFYP Research · Department of Civil Engineering · FYP-CE-2026
+            © 2026–2027 GeoFYP Research · NUST Institute of Civil Engineering · FYP-CE-2026-2027
           </p>
           <p className="text-gray-600 text-xs">
             Reference: Zhou & Leung (2022) · Acta Geotechnica ·{" "}
