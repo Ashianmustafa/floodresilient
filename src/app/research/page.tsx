@@ -106,7 +106,7 @@ export default function ResearchPage() {
               {
                 title: "Sequence Matters",
                 icon: Target,
-                color: "purple",
+                color: "cyan",
                 text: "EICP must be applied first — while the sand is hydrophilic — so the aqueous solution can distribute uniformly through the pore space. Applying the hydrophobic treatment first may block EICP solution penetration, causing clogging and non-uniform cementation.",
               },
             ].map(({ title, icon: Icon, color, text }) => (
@@ -144,7 +144,7 @@ export default function ResearchPage() {
                   { group: "UT", bg: "bg-gray-50", hydraulic: "High infiltration (reference)", mechanical: "Baseline strength", durability: "No protection" },
                   { group: "H", bg: "bg-teal-50", hydraulic: "Reduced infiltration ✓", mechanical: "Reduced φ, suppressed dilatancy ⚠️", durability: "Limited (no bonding)" },
                   { group: "E", bg: "bg-blue-50", hydraulic: "Marginal reduction", mechanical: "Improved strength ✓", durability: "Moderate (wetting risk)" },
-                  { group: "E+H ⭐", bg: "bg-purple-50", hydraulic: "Best hydraulic protection ✓", mechanical: "High strength ✓", durability: "Best combined ✓" },
+                  { group: "E+H ⭐", bg: "bg-cyan-50", hydraulic: "Best hydraulic protection ✓", mechanical: "High strength ✓", durability: "Best combined ✓" },
                 ].map((row, i) => (
                   <tr key={i} className={row.bg}>
                     <td className="px-4 py-3 font-mono font-bold text-slate-800">{row.group}</td>
@@ -169,7 +169,7 @@ export default function ResearchPage() {
               { criterion: "Hydraulic", cond: "Infiltration < EICP-only and untreated sand.", icon: Droplets, color: "teal" },
               { criterion: "Mechanical", cond: "Strength > hydrophobic-only and suitable for target load.", icon: Layers, color: "blue" },
               { criterion: "Durability", cond: "Strength/bearing retention after cycling > EICP-only.", icon: RefreshCw, color: "green" },
-              { criterion: "Uniformity", cond: "No severe upper-zone clogging or untreated lower zone.", icon: Target, color: "purple" },
+              { criterion: "Uniformity", cond: "No severe upper-zone clogging or untreated lower zone.", icon: Target, color: "cyan" },
               { criterion: "Hydrophobicity", cond: "≥ 9 of 10 drops stable and repellency remains after cycling.", icon: Droplets, color: "teal" },
               { criterion: "Reproducibility", cond: "Replicate variability acceptable — no single specimen controls conclusion.", icon: BookOpen, color: "gray" },
             ].map(({ criterion, cond, icon: Icon, color }) => (

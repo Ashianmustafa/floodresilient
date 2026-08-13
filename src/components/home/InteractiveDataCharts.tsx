@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ResponsiveContainer,
   LineChart,
@@ -15,7 +16,7 @@ import {
   AreaChart,
   Area,
 } from "recharts";
-import { BarChart3, TrendingUp, Droplets, ShieldCheck } from "lucide-react";
+import { BarChart3, TrendingUp, Droplets, ShieldCheck, Sparkles } from "lucide-react";
 
 // Direct Shear Test Data: Shear Stress (kPa) vs Normal Stress (kPa)
 const shearData = [
@@ -44,21 +45,27 @@ export default function InteractiveDataCharts() {
   const [activeTab, setActiveTab] = useState<"durability" | "shear" | "hydraulic">("durability");
 
   return (
-    <section className="py-24 bg-slate-50 border-y border-slate-200">
+    <section className="py-24 bg-slate-50 border-y border-slate-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-100 border border-blue-200 rounded-full text-xs font-bold text-blue-800 mb-4 tracking-wide uppercase">
-            <BarChart3 className="w-4 h-4 text-blue-700" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-12"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-50 border border-cyan-200 rounded-full text-xs font-bold text-cyan-800 mb-4 tracking-wide uppercase shadow-sm">
+            <Sparkles className="w-4 h-4 text-cyan-600 animate-pulse" />
             Interactive Analytical Visualizer
           </span>
           <h2 className="font-jakarta font-bold text-3xl sm:text-4xl text-slate-900 mb-4">
-            Hydro-Mechanical Performance Charts
+            Hydro-Mechanical Performance Analytics
           </h2>
           <p className="text-slate-600 font-inter leading-relaxed">
             High-contrast comparison of shear strength, bearing capacity retention, and hydraulic water repellency.
           </p>
-        </div>
+        </motion.div>
 
         {/* Tab Switcher */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
@@ -70,160 +77,188 @@ export default function InteractiveDataCharts() {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             return (
-              <button
+              <motion.button
                 key={tab.id}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`inline-flex items-center gap-2.5 px-5 py-3 rounded-xl font-bold text-sm transition-all duration-200 cursor-pointer shadow-sm ${
                   isActive
-                    ? "bg-blue-700 text-white shadow-md shadow-blue-700/20 scale-105"
+                    ? "bg-cyan-600 text-white shadow-md shadow-cyan-600/20"
                     : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200"
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-blue-600"}`} />
+                <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-cyan-600"}`} />
                 {tab.label}
-              </button>
+              </motion.button>
             );
           })}
         </div>
 
-        {/* High-Contrast Light Card */}
-        <div className="bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-xl relative overflow-hidden">
-          {/* Active Chart 1: Durability */}
-          {activeTab === "durability" && (
-            <div>
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-                <div>
-                  <h3 className="font-jakarta font-bold text-xl text-slate-900 flex items-center gap-2">
-                    <ShieldCheck className="w-6 h-6 text-blue-700" />
-                    Bearing Capacity Retention (%) Over Flood–Dry Cycles
-                  </h3>
-                  <p className="text-slate-600 text-xs sm:text-sm mt-1">
-                    EICP + Hydrophobic (E+H) retains <strong className="text-purple-700">84% bearing capacity</strong> after 10 flood cycles vs 41% in untreated sand.
-                  </p>
+        {/* High-Contrast Light Card with Animation */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-xl relative overflow-hidden"
+        >
+          <AnimatePresence mode="wait">
+            {/* Active Chart 1: Durability */}
+            {activeTab === "durability" && (
+              <motion.div
+                key="durability"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+                  <div>
+                    <h3 className="font-jakarta font-bold text-xl text-slate-900 flex items-center gap-2">
+                      <ShieldCheck className="w-6 h-6 text-cyan-600" />
+                      Bearing Capacity Retention (%) Over Flood–Dry Cycles
+                    </h3>
+                    <p className="text-slate-600 text-xs sm:text-sm mt-1">
+                      EICP + Hydrophobic (E+H) retains <strong className="text-cyan-700">84% bearing capacity</strong> after 10 flood cycles vs 41% in untreated sand.
+                    </p>
+                  </div>
+                  <span className="px-3.5 py-1.5 bg-cyan-100 text-cyan-900 border border-cyan-200 rounded-full text-xs font-bold shrink-0">
+                    ⭐ Recommended: E+H (84% Retention)
+                  </span>
                 </div>
-                <span className="px-3.5 py-1.5 bg-purple-100 text-purple-800 border border-purple-200 rounded-full text-xs font-bold shrink-0">
-                  ⭐ Best System: E+H (84% Retention)
-                </span>
-              </div>
 
-              <div className="h-[380px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={durabilityData} margin={{ top: 20, right: 30, left: 10, bottom: 25 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                    <XAxis dataKey="cycles" stroke="#334155" tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} />
-                    <YAxis stroke="#334155" domain={[0, 110]} tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} unit="%" />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: "#0f172a", borderColor: "#334155", borderRadius: "12px", color: "#fff", fontWeight: 600 }}
-                    />
-                    <Legend wrapperStyle={{ paddingTop: "15px", fontWeight: 700, fontSize: "14px" }} />
-                    <Bar dataKey="UT" name="Untreated (UT)" fill="#64748b" radius={[6, 6, 0, 0]} />
-                    <Bar dataKey="H" name="Hydrophobic Only (H)" fill="#0d9488" radius={[6, 6, 0, 0]} />
-                    <Bar dataKey="E" name="EICP Only (E)" fill="#2563eb" radius={[6, 6, 0, 0]} />
-                    <Bar dataKey="EH" name="EICP + Hydrophobic (E+H)" fill="#9333ea" radius={[6, 6, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          )}
-
-          {/* Active Chart 2: Shear Envelope */}
-          {activeTab === "shear" && (
-            <div>
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-                <div>
-                  <h3 className="font-jakarta font-bold text-xl text-slate-900 flex items-center gap-2">
-                    <TrendingUp className="w-6 h-6 text-blue-700" />
-                    Direct Shear Envelope (Shear Stress vs Normal Stress)
-                  </h3>
-                  <p className="text-slate-600 text-xs sm:text-sm mt-1">
-                    CaCO₃ mineral precipitation provides substantial cohesion (<strong className="text-blue-700">c' ≈ 18–22 kPa</strong>) across all normal stress levels.
-                  </p>
+                <div className="h-[380px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={durabilityData} margin={{ top: 20, right: 30, left: 10, bottom: 25 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="cycles" stroke="#334155" tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} />
+                      <YAxis stroke="#334155" domain={[0, 110]} tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} unit="%" />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: "#0f172a", borderColor: "#334155", borderRadius: "12px", color: "#fff", fontWeight: 600 }}
+                      />
+                      <Legend wrapperStyle={{ paddingTop: "15px", fontWeight: 700, fontSize: "14px" }} />
+                      <Bar dataKey="UT" name="Untreated (UT)" fill="#64748b" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="H" name="Hydrophobic Only (H)" fill="#10b981" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="E" name="EICP Only (E)" fill="#2563eb" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="EH" name="EICP + Hydrophobic (E+H)" fill="#0284c7" radius={[6, 6, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </div>
-                <span className="px-3.5 py-1.5 bg-blue-100 text-blue-800 border border-blue-200 rounded-full text-xs font-bold shrink-0">
-                  EICP Cohesion: c' ≈ 18–22 kPa
-                </span>
-              </div>
+              </motion.div>
+            )}
 
-              <div className="h-[380px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={shearData} margin={{ top: 20, right: 30, left: 10, bottom: 25 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                    <XAxis dataKey="normalStress" stroke="#334155" tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} />
-                    <YAxis stroke="#334155" unit=" kPa" tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: "#0f172a", borderColor: "#334155", borderRadius: "12px", color: "#fff", fontWeight: 600 }}
-                    />
-                    <Legend wrapperStyle={{ paddingTop: "15px", fontWeight: 700, fontSize: "14px" }} />
-                    <Line type="monotone" dataKey="UT" name="Untreated (UT)" stroke="#64748b" strokeWidth={3} dot={{ r: 5 }} />
-                    <Line type="monotone" dataKey="H" name="Hydrophobic Only (H)" stroke="#0d9488" strokeWidth={3} dot={{ r: 5 }} />
-                    <Line type="monotone" dataKey="E" name="EICP Only (E)" stroke="#2563eb" strokeWidth={4} dot={{ r: 6 }} />
-                    <Line type="monotone" dataKey="EH" name="EICP + Hydrophobic (E+H)" stroke="#9333ea" strokeWidth={4} dot={{ r: 6 }} strokeDasharray="4 4" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          )}
-
-          {/* Active Chart 3: Hydraulic Performance */}
-          {activeTab === "hydraulic" && (
-            <div>
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
-                <div>
-                  <h3 className="font-jakarta font-bold text-xl text-slate-900 flex items-center gap-2">
-                    <Droplets className="w-6 h-6 text-teal-600" />
-                    Infiltration Reduction (%) & Contact Angle (°)
-                  </h3>
-                  <p className="text-slate-600 text-xs sm:text-sm mt-1">
-                    Hydrophobic post-treatment creates <strong className="text-teal-700">132° contact angle</strong> and <strong className="text-purple-700">88% infiltration reduction</strong>.
-                  </p>
+            {/* Active Chart 2: Shear Envelope */}
+            {activeTab === "shear" && (
+              <motion.div
+                key="shear"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+                  <div>
+                    <h3 className="font-jakarta font-bold text-xl text-slate-900 flex items-center gap-2">
+                      <TrendingUp className="w-6 h-6 text-blue-600" />
+                      Direct Shear Envelope (Shear Stress vs Normal Stress)
+                    </h3>
+                    <p className="text-slate-600 text-xs sm:text-sm mt-1">
+                      CaCO₃ mineral precipitation provides substantial cohesion (<strong className="text-blue-700">c' ≈ 18–22 kPa</strong>) across all normal stress levels.
+                    </p>
+                  </div>
+                  <span className="px-3.5 py-1.5 bg-blue-100 text-blue-900 border border-blue-200 rounded-full text-xs font-bold shrink-0">
+                    EICP Cohesion: c' ≈ 18–22 kPa
+                  </span>
                 </div>
-                <span className="px-3.5 py-1.5 bg-teal-100 text-teal-800 border border-teal-200 rounded-full text-xs font-bold shrink-0">
-                  ACA &gt; 90° = Hydrophobic Barrier
-                </span>
-              </div>
 
-              <div className="h-[380px] w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={hydraulicData} margin={{ top: 20, right: 30, left: 10, bottom: 25 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                    <XAxis dataKey="group" stroke="#334155" tick={{ fill: "#1e293b", fontSize: 12, fontWeight: 600 }} />
-                    <YAxis stroke="#334155" tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: "#0f172a", borderColor: "#334155", borderRadius: "12px", color: "#fff", fontWeight: 600 }}
-                    />
-                    <Legend wrapperStyle={{ paddingTop: "15px", fontWeight: 700, fontSize: "14px" }} />
-                    <Area type="monotone" dataKey="infiltrationReduction" name="Infiltration Reduction (%)" fill="#0d9488" stroke="#0d9488" fillOpacity={0.3} strokeWidth={3} />
-                    <Area type="monotone" dataKey="contactAngle" name="Apparent Contact Angle (°)" fill="#2563eb" stroke="#2563eb" fillOpacity={0.3} strokeWidth={3} />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-          )}
+                <div className="h-[380px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={shearData} margin={{ top: 20, right: 30, left: 10, bottom: 25 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="normalStress" stroke="#334155" tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} />
+                      <YAxis stroke="#334155" unit=" kPa" tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: "#0f172a", borderColor: "#334155", borderRadius: "12px", color: "#fff", fontWeight: 600 }}
+                      />
+                      <Legend wrapperStyle={{ paddingTop: "15px", fontWeight: 700, fontSize: "14px" }} />
+                      <Line type="monotone" dataKey="UT" name="Untreated (UT)" stroke="#64748b" strokeWidth={3} dot={{ r: 5 }} />
+                      <Line type="monotone" dataKey="H" name="Hydrophobic Only (H)" stroke="#10b981" strokeWidth={3} dot={{ r: 5 }} />
+                      <Line type="monotone" dataKey="E" name="EICP Only (E)" stroke="#2563eb" strokeWidth={4} dot={{ r: 6 }} />
+                      <Line type="monotone" dataKey="EH" name="EICP + Hydrophobic (E+H)" stroke="#0284c7" strokeWidth={4} dot={{ r: 6 }} strokeDasharray="4 4" />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+            )}
 
-          {/* Metric Cards Row — High Contrast & Ultra Clear */}
+            {/* Active Chart 3: Hydraulic Performance */}
+            {activeTab === "hydraulic" && (
+              <motion.div
+                key="hydraulic"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+                  <div>
+                    <h3 className="font-jakarta font-bold text-xl text-slate-900 flex items-center gap-2">
+                      <Droplets className="w-6 h-6 text-emerald-600" />
+                      Infiltration Reduction (%) & Contact Angle (°)
+                    </h3>
+                    <p className="text-slate-600 text-xs sm:text-sm mt-1">
+                      Hydrophobic post-treatment creates <strong className="text-emerald-700">132° contact angle</strong> and <strong className="text-cyan-700">88% infiltration reduction</strong>.
+                    </p>
+                  </div>
+                  <span className="px-3.5 py-1.5 bg-emerald-100 text-emerald-900 border border-emerald-200 rounded-full text-xs font-bold shrink-0">
+                    ACA &gt; 90° = Hydrophobic Barrier
+                  </span>
+                </div>
+
+                <div className="h-[380px] w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={hydraulicData} margin={{ top: 20, right: 30, left: 10, bottom: 25 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="group" stroke="#334155" tick={{ fill: "#1e293b", fontSize: 12, fontWeight: 600 }} />
+                      <YAxis stroke="#334155" tick={{ fill: "#1e293b", fontSize: 13, fontWeight: 600 }} />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: "#0f172a", borderColor: "#334155", borderRadius: "12px", color: "#fff", fontWeight: 600 }}
+                      />
+                      <Legend wrapperStyle={{ paddingTop: "15px", fontWeight: 700, fontSize: "14px" }} />
+                      <Area type="monotone" dataKey="infiltrationReduction" name="Infiltration Reduction (%)" fill="#10b981" stroke="#10b981" fillOpacity={0.3} strokeWidth={3} />
+                      <Area type="monotone" dataKey="contactAngle" name="Apparent Contact Angle (°)" fill="#0284c7" stroke="#0284c7" fillOpacity={0.3} strokeWidth={3} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Metric Cards Row — Light Sky Cyan Palette */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-200">
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-sm">
+            <motion.div whileHover={{ y: -4 }} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center shadow-sm">
               <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Target Replicate CV</p>
               <p className="text-xl sm:text-2xl font-jakarta font-extrabold text-slate-900 mt-1">&lt; 15%</p>
-              <span className="text-[11px] text-teal-700 font-semibold">High Repeatability</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-center shadow-sm">
-              <p className="text-xs font-bold text-blue-700 uppercase tracking-wider">Friction Angle (φ')</p>
-              <p className="text-xl sm:text-2xl font-jakarta font-extrabold text-blue-900 mt-1">34° – 38°</p>
+              <span className="text-[11px] text-emerald-700 font-semibold">High Repeatability</span>
+            </motion.div>
+            <motion.div whileHover={{ y: -4 }} className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-center shadow-sm">
+              <p className="text-xs font-bold text-blue-800 uppercase tracking-wider">Friction Angle (φ')</p>
+              <p className="text-xl sm:text-2xl font-jakarta font-extrabold text-blue-950 mt-1">34° – 38°</p>
               <span className="text-[11px] text-blue-700 font-semibold">Shear Capacity</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-center shadow-sm">
-              <p className="text-xs font-bold text-purple-700 uppercase tracking-wider">CaCO₃ Content</p>
-              <p className="text-xl sm:text-2xl font-jakarta font-extrabold text-purple-900 mt-1">3.5% – 5.2%</p>
-              <span className="text-[11px] text-purple-700 font-semibold">Mineral Bonding</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-center shadow-sm">
+            </motion.div>
+            <motion.div whileHover={{ y: -4 }} className="p-4 rounded-2xl bg-cyan-50 border border-cyan-200 text-center shadow-sm">
+              <p className="text-xs font-bold text-cyan-800 uppercase tracking-wider">CaCO₃ Content</p>
+              <p className="text-xl sm:text-2xl font-jakarta font-extrabold text-cyan-950 mt-1">3.5% – 5.2%</p>
+              <span className="text-[11px] text-cyan-700 font-semibold">Mineral Bonding</span>
+            </motion.div>
+            <motion.div whileHover={{ y: -4 }} className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-center shadow-sm">
               <p className="text-xs font-bold text-amber-800 uppercase tracking-wider">DMDCS Pilot Dosage</p>
-              <p className="text-xl sm:text-2xl font-jakarta font-extrabold text-amber-900 mt-1">0.05% mass</p>
+              <p className="text-xl sm:text-2xl font-jakarta font-extrabold text-amber-950 mt-1">0.05% mass</p>
               <span className="text-[11px] text-amber-700 font-semibold">Low-Dose Coating</span>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

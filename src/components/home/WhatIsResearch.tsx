@@ -1,34 +1,42 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { FlaskConical, Droplets, ArrowRight } from "lucide-react";
 
 export default function WhatIsResearch() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left: Text */}
-          <div>
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-teal-50 border border-teal-100 rounded-full text-xs font-semibold text-teal-700 mb-6">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-cyan-50 border border-cyan-200 rounded-full text-xs font-bold text-cyan-800 mb-6 shadow-sm">
               Dual-Technology Approach
             </span>
             <h2 className="font-jakarta font-bold text-3xl sm:text-4xl text-slate-900 mb-6 leading-tight">
               Why Combine EICP with{" "}
               <span className="gradient-text">Hydrophobic Treatment?</span>
             </h2>
-            <div className="space-y-4 text-gray-600 font-inter leading-relaxed">
+            <div className="space-y-4 text-slate-600 font-inter leading-relaxed">
               <p>
-                <strong className="text-slate-800">EICP</strong> (Enzyme-Induced Carbonate Precipitation) uses
+                <strong className="text-slate-900 font-bold">EICP</strong> (Enzyme-Induced Carbonate Precipitation) uses
                 plant-derived urease to catalyze precipitation of calcium carbonate — creating CaCO₃ bonds between sand
                 grains that dramatically improve stiffness and shear strength.
               </p>
               <p>
-                <strong className="text-slate-800">Hydrophobic treatment</strong> creates a water-repellent barrier on
+                <strong className="text-slate-900 font-bold">Hydrophobic treatment</strong> creates a water-repellent barrier on
                 soil particles, delaying flood water infiltration and protecting the foundation from saturation. However,
                 stronger coatings may reduce friction angle and suppress dilatancy.
               </p>
               <p>
-                Alone, each has limitations. Together, they may be{" "}
-                <span className="font-semibold text-blue-700">complementary</span>: EICP provides the load-bearing
+                Alone, each has limitations. Together, they are{" "}
+                <span className="font-bold text-blue-700">complementary</span>: EICP provides the load-bearing
                 skeleton while the hydrophobic layer shields it from flood-induced degradation.
               </p>
             </div>
@@ -36,7 +44,7 @@ export default function WhatIsResearch() {
             {/* Callout */}
             <div className="callout-blue mt-6">
               <p className="text-sm font-inter text-slate-700 italic">
-                <span className="font-semibold text-blue-800 not-italic">Central Research Question: </span>
+                <span className="font-bold text-blue-900 not-italic">Central Research Question: </span>
                 Can EICP compensate for the mechanical weakening associated with hydrophobic coating, while the
                 hydrophobic layer protects the cemented foundation soil against flood-induced saturation and
                 deterioration?
@@ -46,25 +54,31 @@ export default function WhatIsResearch() {
             <div className="mt-8">
               <Link
                 href="/research"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-700 text-white font-semibold rounded-xl hover:bg-blue-800 shadow-sm hover:shadow-md transition-all text-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-700 text-white font-bold rounded-xl hover:bg-blue-800 shadow-md hover:shadow-lg transition-all text-sm"
               >
                 Read Full Research <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: Two treatment cards */}
-          <div className="space-y-4">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="space-y-4"
+          >
             {/* EICP Card */}
-            <div className="card-base p-6">
+            <div className="card-base p-6 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center shrink-0 shadow-inner">
                   <FlaskConical className="w-6 h-6 text-blue-700" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-jakarta font-semibold text-lg text-slate-900">EICP Treatment</h3>
-                    <span className="badge bg-blue-100 text-blue-700">Mechanical</span>
+                    <h3 className="font-jakarta font-bold text-lg text-slate-900">EICP Treatment</h3>
+                    <span className="badge bg-blue-100 text-blue-800 font-bold">Mechanical</span>
                   </div>
                   <ul className="space-y-1.5">
                     {[
@@ -73,7 +87,7 @@ export default function WhatIsResearch() {
                       "Applied to hydrophilic sand (aqueous solution)",
                       "Principal role: load-bearing skeleton",
                     ].map((point) => (
-                      <li key={point} className="flex items-start gap-2 text-sm text-gray-600">
+                      <li key={point} className="flex items-start gap-2 text-sm text-slate-600">
                         <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 shrink-0" />
                         {point}
                       </li>
@@ -84,15 +98,15 @@ export default function WhatIsResearch() {
             </div>
 
             {/* Hydrophobic Card */}
-            <div className="card-base p-6">
+            <div className="card-base p-6 bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-teal-100 flex items-center justify-center shrink-0">
-                  <Droplets className="w-6 h-6 text-teal-700" />
+                <div className="w-12 h-12 rounded-2xl bg-cyan-100 flex items-center justify-center shrink-0 shadow-inner">
+                  <Droplets className="w-6 h-6 text-cyan-700" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-jakarta font-semibold text-lg text-slate-900">Hydrophobic Treatment</h3>
-                    <span className="badge bg-teal-100 text-teal-700">Hydraulic</span>
+                    <h3 className="font-jakarta font-bold text-lg text-slate-900">Hydrophobic Treatment</h3>
+                    <span className="badge bg-cyan-100 text-cyan-800 font-bold">Hydraulic</span>
                   </div>
                   <ul className="space-y-1.5">
                     {[
@@ -101,8 +115,8 @@ export default function WhatIsResearch() {
                       "Effective below water-entry head threshold",
                       "Risk: may reduce peak friction angle",
                     ].map((point) => (
-                      <li key={point} className="flex items-start gap-2 text-sm text-gray-600">
-                        <span className="w-1.5 h-1.5 rounded-full bg-teal-500 mt-2 shrink-0" />
+                      <li key={point} className="flex items-start gap-2 text-sm text-slate-600">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-600 mt-2 shrink-0" />
                         {point}
                       </li>
                     ))}
@@ -112,18 +126,18 @@ export default function WhatIsResearch() {
             </div>
 
             {/* Combined result */}
-            <div className="p-5 bg-gradient-to-r from-blue-50 to-teal-50 border border-blue-100 rounded-2xl">
+            <div className="p-5 bg-gradient-to-r from-blue-50 via-cyan-50 to-emerald-50 border border-cyan-200 rounded-2xl shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-teal-500 flex items-center justify-center shrink-0">
-                  <span className="text-white font-bold text-sm">E+H</span>
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-700 to-cyan-600 flex items-center justify-center shrink-0 shadow-md">
+                  <span className="text-white font-extrabold text-sm">E+H</span>
                 </div>
                 <div>
-                  <p className="font-semibold text-slate-800 text-sm">Combined: EICP → Cure → Hydrophobic</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Primary treatment configuration (recommended sequence)</p>
+                  <p className="font-bold text-slate-900 text-sm">Combined: EICP → Cure → Hydrophobic</p>
+                  <p className="text-xs text-slate-500 mt-0.5">Primary treatment configuration (recommended sequence)</p>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

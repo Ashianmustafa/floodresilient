@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowDown, FlaskConical, Droplets, ChevronRight } from "lucide-react";
+import { ArrowDown, FlaskConical, Droplets, ChevronRight, Sparkles } from "lucide-react";
 
 // Fixed particle data — deterministic so SSR and client match
 const PARTICLE_SEEDS = [
@@ -28,24 +29,22 @@ const PARTICLE_SEEDS = [
   { width: 8, left: 96, dur: 13, delay: 7 },
 ];
 
-// Particle component for animated background
 function Particle({ style }: { style: React.CSSProperties }) {
   return (
     <div
-      className="absolute rounded-full bg-blue-400/20 particle"
+      className="absolute rounded-full bg-cyan-400/25 particle"
       style={style}
     />
   );
 }
 
 export default function HeroSection() {
-  // Mount state prevents SSR/client mismatch for particles
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-white pt-16">
-      {/* Animated particles — client-only to avoid SSR/hydration mismatch */}
+      {/* Animated particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {mounted && PARTICLE_SEEDS.map((p, i) => (
           <Particle
@@ -62,24 +61,39 @@ export default function HeroSection() {
         ))}
         {/* Background gradient blobs */}
         <div className="absolute top-20 right-10 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-60" />
-        <div className="absolute bottom-20 left-10 w-72 h-72 bg-teal-50 rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-20 left-10 w-72 h-72 bg-cyan-50 rounded-full blur-3xl opacity-50" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-slate-50 rounded-full blur-3xl opacity-40" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
           {/* Left Content */}
-          <div className="lg:col-span-7 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-7 space-y-6"
+          >
             {/* Eyebrow tag */}
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-100 rounded-full text-xs font-semibold text-blue-700">
-                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="flex items-center gap-2"
+            >
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-50 border border-blue-100 rounded-full text-xs font-bold text-blue-800 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
                 🧪 Final Year Project — Geotechnical Engineering
               </span>
-            </div>
+            </motion.div>
 
             {/* Main heading */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
               <h1 className="font-jakarta font-bold text-4xl sm:text-5xl lg:text-6xl text-slate-900 leading-[1.1] mb-4">
                 Flood-Resilient
                 <br />
@@ -87,40 +101,54 @@ export default function HeroSection() {
                 <br />
                 Engineering
               </h1>
-              <p className="text-lg sm:text-xl text-gray-600 font-inter leading-relaxed max-w-xl">
+              <p className="text-lg sm:text-xl text-slate-600 font-inter leading-relaxed max-w-xl">
                 Investigating combined{" "}
-                <span className="font-semibold text-blue-700">EICP biocementation</span>{" "}
+                <span className="font-bold text-blue-700">EICP biocementation</span>{" "}
                 and{" "}
-                <span className="font-semibold text-teal-600">hydrophobic treatment</span>{" "}
+                <span className="font-bold text-cyan-700">hydrophobic treatment</span>{" "}
                 to protect shallow foundation soils against repeated flood–dry cycles.
               </p>
-            </div>
+            </motion.div>
 
             {/* Research question callout */}
-            <div className="callout-blue">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="callout-blue"
+            >
               <p className="text-sm font-inter text-slate-700 italic">
-                <span className="font-semibold text-blue-800 not-italic">Research Question: </span>
+                <span className="font-bold text-blue-900 not-italic">Research Question: </span>
                 Can EICP compensate for mechanical weakening from hydrophobic coating, while the hydrophobic layer
                 protects the cemented foundation soil from flood-induced deterioration?
               </p>
-            </div>
+            </motion.div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Link
-                href="/research"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-700 text-white font-semibold rounded-xl hover:bg-blue-800 shadow-md hover:shadow-lg transition-all duration-200 text-sm"
-              >
-                Explore Research
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/feasibility"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 text-sm"
-              >
-                View Feasibility Report
-              </Link>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="flex flex-wrap gap-3 pt-2"
+            >
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                <Link
+                  href="/research"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-blue-700 text-white font-bold rounded-xl hover:bg-blue-800 shadow-md hover:shadow-xl transition-all duration-200 text-sm"
+                >
+                  Explore Research
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                <Link
+                  href="/feasibility"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-slate-50 hover:border-slate-400 transition-all duration-200 text-sm shadow-sm"
+                >
+                  View Feasibility Report
+                </Link>
+              </motion.div>
+            </motion.div>
 
             {/* Treatment tags */}
             <div className="flex flex-wrap gap-2 pt-1">
@@ -128,92 +156,102 @@ export default function HeroSection() {
                 (tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors cursor-default"
+                    className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-semibold hover:bg-slate-200 transition-colors cursor-default border border-slate-200"
                   >
                     {tag}
                   </span>
                 )
               )}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right — Diagram */}
-          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+          {/* Right — Floating Layer Diagram */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="lg:col-span-5 flex justify-center lg:justify-end"
+          >
             <div className="relative w-full max-w-md">
-              {/* Diagram card */}
-              <div className="bg-white border border-gray-100 rounded-3xl shadow-xl p-6 space-y-3">
+              {/* Animated Card Container */}
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                className="bg-white border border-slate-200 rounded-3xl shadow-2xl p-6 space-y-3"
+              >
                 <div className="text-center mb-4">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Treatment System</p>
-                  <h3 className="font-jakarta font-bold text-lg text-slate-800 mt-1">EICP + Hydrophobic Layers</h3>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Treatment System Layering</p>
+                  <h3 className="font-jakarta font-bold text-lg text-slate-900 mt-1">EICP + Hydrophobic Layers</h3>
                 </div>
 
                 {/* Layer visualization */}
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   {/* Flood water */}
-                  <div className="relative bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 flex items-center gap-3">
-                    <Droplets className="w-5 h-5 text-blue-500 shrink-0" />
+                  <div className="relative bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 flex items-center gap-3">
+                    <Droplets className="w-5 h-5 text-blue-600 shrink-0" />
                     <div>
-                      <p className="text-xs font-semibold text-blue-800">Flood Water</p>
-                      <p className="text-xs text-blue-600">Surface inundation during flood event</p>
+                      <p className="text-xs font-bold text-blue-900">Flood Water Layer</p>
+                      <p className="text-xs text-blue-700">Surface inundation during seasonal flooding</p>
                     </div>
-                    <span className="ml-auto text-blue-400">↓</span>
+                    <span className="ml-auto text-blue-500 font-bold">↓</span>
                   </div>
 
                   {/* Hydrophobic Layer */}
-                  <div className="relative bg-teal-50 border-2 border-teal-200 rounded-xl px-4 py-3 flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-teal-500 shrink-0 flex items-center justify-center">
-                      <span className="text-white text-[10px] font-bold">H</span>
+                  <div className="relative bg-cyan-50 border-2 border-cyan-300 rounded-xl px-4 py-3 flex items-center gap-3 shadow-sm">
+                    <div className="w-6 h-6 rounded-full bg-cyan-600 shrink-0 flex items-center justify-center">
+                      <span className="text-white text-[11px] font-bold">H</span>
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-teal-800">Hydrophobic Layer</p>
-                      <p className="text-xs text-teal-600">Water repellent barrier — DMDCS coating</p>
+                      <p className="text-xs font-bold text-cyan-950">Hydrophobic Barrier Layer</p>
+                      <p className="text-xs text-cyan-800">DMDCS water-repellent coating (upper 20–30mm)</p>
                     </div>
-                    <span className="ml-auto text-xs font-bold text-teal-600 bg-teal-100 px-2 py-0.5 rounded-full">Post-treatment</span>
+                    <span className="ml-auto text-xs font-bold text-cyan-900 bg-cyan-100 border border-cyan-300 px-2 py-0.5 rounded-full">Upper Zone</span>
                   </div>
 
                   {/* EICP Layer */}
-                  <div className="relative bg-blue-50 border-2 border-blue-200 rounded-xl px-4 py-3 flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-blue-600 shrink-0 flex items-center justify-center">
-                      <FlaskConical className="w-3 h-3 text-white" />
+                  <div className="relative bg-blue-50 border-2 border-blue-300 rounded-xl px-4 py-3 flex items-center gap-3 shadow-sm">
+                    <div className="w-6 h-6 rounded-full bg-blue-700 shrink-0 flex items-center justify-center">
+                      <FlaskConical className="w-3.5 h-3.5 text-white" />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-blue-800">EICP Cemented Zone</p>
-                      <p className="text-xs text-blue-600">CaCO₃ bonds — mechanical strength skeleton</p>
+                      <p className="text-xs font-bold text-blue-950">EICP Cemented Zone</p>
+                      <p className="text-xs text-blue-800">CaCO₃ bonds — load-bearing structural skeleton</p>
                     </div>
-                    <span className="ml-auto text-xs font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full">Primary</span>
+                    <span className="ml-auto text-xs font-bold text-blue-900 bg-blue-100 border border-blue-300 px-2 py-0.5 rounded-full">Lower Zone</span>
                   </div>
 
                   {/* Sand Foundation */}
-                  <div className="relative bg-amber-50 border border-amber-100 rounded-xl px-4 py-3 flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-amber-600 shrink-0 flex items-center justify-center">
-                      <span className="text-white text-[10px] font-bold">S</span>
+                  <div className="relative bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-amber-600 shrink-0 flex items-center justify-center">
+                      <span className="text-white text-[11px] font-bold">S</span>
                     </div>
                     <div>
-                      <p className="text-xs font-semibold text-amber-800">Toyoura Sand Foundation</p>
-                      <p className="text-xs text-amber-600">Controlled relative density substrate</p>
+                      <p className="text-xs font-bold text-amber-950">Toyoura Sand Foundation</p>
+                      <p className="text-xs text-amber-800">Controlled relative density (50–60%) substrate</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Result indicator */}
-                <div className="bg-gradient-to-r from-green-50 to-teal-50 border border-green-200 rounded-xl px-4 py-3 text-center">
-                  <p className="text-xs font-semibold text-green-700">✅ Feasibility Verdict: PROCEED</p>
-                  <p className="text-xs text-gray-500 mt-0.5">Expert assessment — geotechnical FYP suitable</p>
+                <div className="bg-gradient-to-r from-emerald-50 to-cyan-50 border border-emerald-200 rounded-xl px-4 py-3 text-center">
+                  <p className="text-xs font-bold text-emerald-900">✅ Feasibility Verdict: PROCEED</p>
+                  <p className="text-xs text-slate-500 mt-0.5">NUST Geotechnical Department Approved FYP</p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Decorative rings */}
               <div className="absolute -z-10 -top-4 -right-4 w-full h-full rounded-3xl border border-blue-100" />
-              <div className="absolute -z-20 -top-8 -right-8 w-full h-full rounded-3xl border border-teal-50" />
+              <div className="absolute -z-20 -top-8 -right-8 w-full h-full rounded-3xl border border-cyan-50" />
             </div>
-          </div>
+          </motion.div>
+
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400">
-        <span className="text-xs font-medium tracking-wider uppercase">Scroll</span>
-        <ArrowDown className="w-4 h-4 animate-bounce" />
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400">
+        <span className="text-xs font-semibold tracking-wider uppercase">Scroll</span>
+        <ArrowDown className="w-4 h-4 animate-bounce text-blue-600" />
       </div>
     </section>
   );

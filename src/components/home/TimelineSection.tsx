@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 const phases = [
   {
     number: "01",
@@ -23,8 +27,8 @@ const phases = [
     title: "Treatment Application",
     description: "Apply EICP → Cure & Dry → Apply Hydrophobic (E+H). Also prepare UT, H-only, and E-only groups for comparison.",
     duration: "Weeks 7–10",
-    color: "border-purple-200 bg-purple-50",
-    numColor: "text-purple-700",
+    color: "border-cyan-200 bg-cyan-50",
+    numColor: "text-cyan-800 font-bold",
   },
   {
     number: "04",
@@ -41,8 +45,8 @@ const phases = [
     title: "Analysis & Report",
     description: "Statistical analysis of results. Compare all KPIs across groups. Write up findings, conclusions and recommendations.",
     duration: "Weeks 19–24",
-    color: "border-green-200 bg-green-50",
-    numColor: "text-green-700",
+    color: "border-emerald-200 bg-emerald-50",
+    numColor: "text-emerald-700",
   },
 ];
 
@@ -51,43 +55,57 @@ export default function TimelineSection() {
     <section className="py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full text-xs font-semibold text-green-700 mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-2xl mx-auto mb-16"
+        >
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-100 rounded-full text-xs font-bold text-emerald-700 mb-4 uppercase tracking-wide">
             Project Timeline
           </span>
           <h2 className="font-jakarta font-bold text-3xl sm:text-4xl text-slate-900 mb-4">
             Research Phases
           </h2>
-          <p className="text-gray-600 font-inter leading-relaxed">
+          <p className="text-slate-600 font-inter leading-relaxed">
             A structured 24-week experimental research programme from literature review to final conclusions.
           </p>
-        </div>
+        </motion.div>
 
         {/* Desktop Timeline */}
         <div className="hidden lg:block relative">
           {/* Connecting line */}
-          <div className="absolute top-8 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-300 via-purple-300 to-green-300" />
+          <div className="absolute top-8 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-blue-300 via-cyan-400 to-emerald-400" />
 
           <div className="grid grid-cols-5 gap-4 relative">
-            {phases.map((phase) => (
-              <div key={phase.number} className="flex flex-col items-center text-center group">
+            {phases.map((phase, index) => (
+              <motion.div
+                key={phase.number}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -6 }}
+                className="flex flex-col items-center text-center group"
+              >
                 {/* Circle node */}
-                <div className="relative z-10 w-16 h-16 rounded-full bg-white border-2 border-gray-200 flex flex-col items-center justify-center mb-4 shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all">
+                <div className="relative z-10 w-16 h-16 rounded-full bg-white border-2 border-slate-200 flex flex-col items-center justify-center mb-4 shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all">
                   <span className="text-2xl">{phase.icon}</span>
                 </div>
 
                 {/* Content card */}
-                <div className={`card-base p-4 text-left border ${phase.color} w-full`}>
+                <div className={`card-base p-4 text-left border ${phase.color} w-full shadow-sm hover:shadow-md transition-shadow`}>
                   <span className={`font-mono text-xs font-bold ${phase.numColor} mb-1 block`}>
                     Phase {phase.number}
                   </span>
                   <h3 className="font-jakarta font-bold text-sm text-slate-900 mb-2">{phase.title}</h3>
-                  <p className="text-gray-500 text-xs leading-relaxed mb-3">{phase.description}</p>
-                  <span className="inline-block px-2 py-0.5 bg-gray-100 text-gray-500 text-[10px] font-medium rounded-md">
+                  <p className="text-slate-600 text-xs leading-relaxed mb-3">{phase.description}</p>
+                  <span className="inline-block px-2 py-0.5 bg-white/80 text-slate-600 text-[10px] font-semibold rounded-md border border-slate-200">
                     {phase.duration}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -95,26 +113,33 @@ export default function TimelineSection() {
         {/* Mobile Timeline (Vertical) */}
         <div className="lg:hidden space-y-6">
           {phases.map((phase, index) => (
-            <div key={phase.number} className="flex gap-4">
+            <motion.div
+              key={phase.number}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="flex gap-4"
+            >
               {/* Left: line + circle */}
               <div className="flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center shadow-sm shrink-0">
+                <div className="w-12 h-12 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center shadow-sm shrink-0">
                   <span className="text-xl">{phase.icon}</span>
                 </div>
                 {index < phases.length - 1 && (
-                  <div className="w-0.5 flex-1 bg-gray-200 mt-2" />
+                  <div className="w-0.5 flex-1 bg-slate-200 mt-2" />
                 )}
               </div>
 
               {/* Right: content */}
-              <div className={`flex-1 card-base p-5 border ${phase.color} mb-2`}>
+              <div className={`flex-1 card-base p-5 border ${phase.color} mb-2 shadow-sm`}>
                 <span className={`font-mono text-xs font-bold ${phase.numColor} mb-1 block`}>
                   Phase {phase.number} · {phase.duration}
                 </span>
                 <h3 className="font-jakarta font-bold text-base text-slate-900 mb-2">{phase.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{phase.description}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{phase.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
